@@ -8,7 +8,7 @@ function App() {
   return (
     <div>
       <h2>App</h2>
-      <BarChart />
+      <BarChart data={[5, 10, 1, 3]} size={[500, 500]} />
     </div>
   )
 }

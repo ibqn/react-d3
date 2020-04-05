@@ -5,11 +5,10 @@ import { select } from "d3-selection"
 
 const BarChart = ({ data, size: [xSize, ySize] }) => {
   const node = useRef()
-  const dataMax = max(data)
 
   useEffect(() => {
+    const dataMax = max(data)
     const yScale = scaleLinear().domain([0, dataMax]).range([0, ySize])
-
     const barWidth = 25
 
     // console.log(node)
@@ -26,7 +25,7 @@ const BarChart = ({ data, size: [xSize, ySize] }) => {
       .attr("y", (d) => ySize - yScale(d))
       .attr("height", (d) => yScale(d))
       .attr("width", barWidth)
-  })
+  }, [data, xSize, ySize])
 
   return (
     <>

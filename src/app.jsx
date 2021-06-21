@@ -6,6 +6,7 @@ import { geoCentroid } from "d3-geo"
 import { range } from "d3-array"
 import { scaleThreshold } from "d3-scale"
 import WorldMap from "./components/world-map"
+import { useState } from "react"
 
 const appData = worldData.features.filter((d) => geoCentroid(d)[0] < -20)
 
@@ -29,11 +30,17 @@ const dataSize = 20
 const data = Array.from({ length: dataSize }, () => Math.random() * 30)
 
 const App = () => {
-  console.log(worldData.features)
+  const [hover, setHover] = useState(null)
+  // console.log(worldData.features)
   return (
     <Main>
       <h2>D3 chart example</h2>
-      <WorldMap data={appData} />
+      <WorldMap
+        hover={hover}
+        setHover={setHover}
+        data={appData}
+        colorScale={colorScale}
+      />
       <BarChart data={data} size={[26 * dataSize, 500]} />
     </Main>
   )

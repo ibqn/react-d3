@@ -1,7 +1,14 @@
-import React, { useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import { max } from "d3-array"
 import { scaleLinear } from "d3-scale"
 import { select } from "d3-selection"
+import world from "./world.json"
+import styled from "styled-components"
+
+const Svg = styled.svg`
+  border: 1px solid black;
+  padding: 5px;
+`
 
 const BarChart = ({ data, size: [xSize, ySize] }) => {
   const node = useRef()
@@ -12,6 +19,7 @@ const BarChart = ({ data, size: [xSize, ySize] }) => {
     const barWidth = 25
 
     // console.log(node)
+    console.log(world.features)
 
     select(node.current).selectAll("rect").data(data).enter().append("rect")
 
@@ -30,7 +38,7 @@ const BarChart = ({ data, size: [xSize, ySize] }) => {
   return (
     <>
       <div>Bar Chart</div>
-      <svg ref={(ref) => (node.current = ref)} width={500} height={500}></svg>
+      <Svg ref={(ref) => (node.current = ref)} width={xSize} height={ySize} />
     </>
   )
 }

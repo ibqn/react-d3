@@ -1,15 +1,21 @@
-import React from "react"
-// import logo from "./logo.svg"
-// import "./App.css"
-
 import BarChart from "./components/bar-chart"
+import styled from "styled-components"
 
-function App() {
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const dataSize = 20
+const data = Array.from({ length: dataSize }, () => Math.random() * 30)
+
+const App = () => {
   return (
-    <div>
-      <h2>App</h2>
-      <BarChart data={[5, 10, 1, 3]} size={[500, 500]} />
-    </div>
+    <Main>
+      <h2>D3 chart Example</h2>
+      <BarChart data={data} size={[26 * dataSize, 500]} />
+    </Main>
   )
 }
 

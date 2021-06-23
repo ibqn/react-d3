@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react"
+import Brush from "./components/brush"
 import BarChart from "./components/bar-chart"
 import styled from "styled-components"
 
@@ -6,7 +8,6 @@ import { geoCentroid } from "d3-geo"
 import { range } from "d3-array"
 import { scaleThreshold } from "d3-scale"
 import WorldMap from "./components/world-map"
-import { useState } from "react"
 
 const appData = worldData.features.filter((d) => geoCentroid(d)[0] < -20)
 
@@ -27,21 +28,36 @@ const Main = styled.main`
 `
 
 const dataSize = 20
-const data = Array.from({ length: dataSize }, () => Math.random() * 30)
 
 const App = () => {
   const [hover, setHover] = useState(null)
-  // console.log(worldData.features)
+  const [brushExtent, setBrushExtent] = useState([0, 40])
+
+  const filteredAppData = useMemo(
+    () =>
+      appData.filter(
+        (d, i) => d.launchDay >= brushExtent[0] && d.launchDay <= brushExtent[1]
+      ),
+    [brushExtent]
+  )
+
   return (
     <Main>
       <h2>D3 chart example</h2>
       <WorldMap
         hover={hover}
         setHover={setHover}
-        data={appData}
+        data={filteredAppData}
         colorScale={colorScale}
       />
-      <BarChart data={data} size={[26 * dataSize, 500]} />
+      <Brush changeBrush={setBrushExtent} />
+      <BarChart
+        hover={hover}
+        setHover={setHover}
+        colorScale={colorScale}
+        data={filteredAppData}
+        size={[500, 500]}
+      />
     </Main>
   )
 }

@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react"
-import Brush from "./components/brush"
-import BarChart from "./components/bar-chart"
+import Brush from "components/brush"
+import BarChart from "components/bar-chart"
 import styled from "styled-components"
 
-import worldData from "./data/world.json"
+import worldData from "data/world.json"
 import { geoCentroid } from "d3-geo"
 import { range } from "d3-array"
 import { scaleThreshold } from "d3-scale"
-import WorldMap from "./components/world-map"
+import WorldMap from "components/world-map"
 
 const appData = worldData.features.filter((d) => geoCentroid(d)[0] < -20)
 
@@ -36,7 +36,7 @@ const App = () => {
   const filteredAppData = useMemo(
     () =>
       appData.filter(
-        (d, i) => d.launchDay >= brushExtent[0] && d.launchDay <= brushExtent[1]
+        (d) => d.launchDay >= brushExtent[0] && d.launchDay <= brushExtent[1]
       ),
     [brushExtent]
   )
@@ -56,7 +56,7 @@ const App = () => {
         setHover={setHover}
         colorScale={colorScale}
         data={filteredAppData}
-        size={[500, 500]}
+        size={[dataSize * filteredAppData.length, 500]}
       />
     </Main>
   )
